@@ -1,0 +1,26 @@
+FROM centos
+
+ENV HOME_DIR=/home/eric
+ENV GO111MODULE=on
+ENV GOPROXY="https://mirrors.aliyun.com/goproxy/"
+
+COPY ./supervisord.conf /etc/
+COPY ./consul/consul.conf /etc/supervisord.d/
+COPY ./consul/consul /usr/bin
+COPY ./consul/consul /usr/sbin
+
+RUN yum install -y go 
+RUN yum install -y vim 
+RUN yum install -y git 
+RUN yum install -y wget 
+RUN yum install -y epel-release 
+RUN yum install -y supervisor 
+RUN yum install -y unzip 
+RUN mkdir -p ${HOME_DIR}/data/consul \
+	&& mkdir -p /data/logs/consul/
+
+WORKDIR ${HOME_DIR}
+
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
+EXPOSE 8500
+
