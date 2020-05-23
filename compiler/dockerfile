@@ -1,0 +1,18 @@
+FROM centos
+
+
+ENV HOME_DIR=/home/eric
+RUN mkdir -p ${HOME_DIR}/build
+COPY ./build ${HOME_DIR}/build
+RUN yum -y install vim \
+    && yum -y install git \
+    && yum -y install go 
+RUN cd ${HOME_DIR}/build \
+    && export GOPROXY=https://mirrors.aliyun.com/goproxy/ \
+    && go mod init build \
+    && go build
+
+WORKDIR ${HOME_DIR}
+CMD ["/bin/bash", "-c", "/home/eric/build/build"]
+
+EXPOSE 9090
