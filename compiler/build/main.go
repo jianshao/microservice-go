@@ -23,7 +23,7 @@ func handle(w http.ResponseWriter, req *http.Request)  {
 	if output, err := cmd.Output(); err == nil {
 		w.Write([]byte(fmt.Sprintf("build %s success\n", name)))
 	} else {
-		w.Write([]byte(fmt.Sprintf("build %s %s", name, output)))
+		w.Write([]byte(fmt.Sprintf("build %s failed: %s, %s\n", name, err, output)))
 	}
 
 }
