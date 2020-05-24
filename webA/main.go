@@ -81,7 +81,6 @@ func handle(wr http.ResponseWriter, req *http.Request)  {
 	} else {
 		fmt.Println("unknown method")
 	}
-	sw
 
 	return
 }
